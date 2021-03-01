@@ -27,3 +27,7 @@ compileTestKotlin {
 springBoot {
     mainClass = "io.pivotal.pal.tracker.PalTrackerApplication"
 }
+
+bootRun.environment([
+        "WELCOME_MESSAGE": "hello",
+])
