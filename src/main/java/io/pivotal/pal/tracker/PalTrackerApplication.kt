@@ -4,8 +4,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 
 @SpringBootApplication
-open class PalTrackerApplication {
+open class PalTrackerApplication
     fun main(args: Array<String>) {
         runApplication<PalTrackerApplication>(*args)
     }
-}
