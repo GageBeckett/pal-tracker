@@ -27,3 +27,17 @@ tasks.withType<KotlinCompile> {
         jvmTarget = "11"
     }
 }
+
+tasks.test {
+    useJUnitPlatform()
+    testLogging {
+        events("passed", "skipped", "failed")
+    }
+    environment("WELCOME_MESSAGE", "Hello from test")
+}
+
+tasks {
+    "bootRun"(JavaExec::class) {
+        environment("WELCOME_MESSAGE", "howdy")
+    }
+}
