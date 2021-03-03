@@ -5,38 +5,38 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
 @RestController
-@RequestMapping("/time-entries")
+@RequestMapping
 class TimeEntryController(private val timeEntryRepository: TimeEntryRepository) {
 
-    @PostMapping
+    @PostMapping("/time-entries")
     @ResponseBody
     fun create(@RequestBody timeEntry: TimeEntry?):ResponseEntity<TimeEntry> =
         timeEntryRepository.create(timeEntry).let {
             ResponseEntity<TimeEntry>(it, HttpStatus.CREATED)
         }
 
-    @GetMapping
+    @GetMapping("/time-entries/{id}")
     @ResponseBody
-    fun read(@RequestParam("id") id: Long):ResponseEntity<TimeEntry> =
+    fun read(@PathVariable id: Long):ResponseEntity<TimeEntry> =
         timeEntryRepository.find(id)?.let {
             ResponseEntity.ok(it)
         } ?: ResponseEntity(HttpStatus.NOT_FOUND)
 
-    @GetMapping
+    @GetMapping("/time-entries")
     fun list():ResponseEntity<MutableList<TimeEntry>> = timeEntryRepository.list().let {
         ResponseEntity.ok(it)
     }
 
-    @PutMapping
+    @PutMapping("/time-entries/{id}")
     @ResponseBody
-    fun update(@RequestParam("id") id: Long,
+    fun update(@PathVariable id: Long,
                @RequestBody timeEntry: TimeEntry):ResponseEntity<TimeEntry> =
         timeEntryRepository.update(id, timeEntry)?.let {
             ResponseEntity.ok(it)
         } ?: ResponseEntity.notFound().build()
 
-    @DeleteMapping
-    fun delete(@RequestParam("id") id: Long): ResponseEntity<Void> =
+    @DeleteMapping("/time-entries/{id}")
+    fun delete(@PathVariable id: Long): ResponseEntity<Void> =
         ResponseEntity.noContent().build<Void>().also {
             timeEntryRepository.delete(id)
         }
