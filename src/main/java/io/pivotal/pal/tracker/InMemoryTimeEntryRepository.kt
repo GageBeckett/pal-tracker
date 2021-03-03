@@ -1,5 +1,8 @@
 package io.pivotal.pal.tracker
 
+import org.springframework.context.annotation.Bean
+
+
 class InMemoryTimeEntryRepository: TimeEntryRepository {
     private val timeEntries = hashMapOf<Long, TimeEntry>()
     private var currentId = 1L
