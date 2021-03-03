@@ -6,12 +6,11 @@ import org.springframework.context.annotation.Bean
 
 @SpringBootApplication
 class PalTrackerApplication {
-    fun main(args: Array<String>) {
-        runApplication<PalTrackerApplication>(*args)
-    }
-
     @Bean
     fun timeEntryRepository(): TimeEntryRepository {
         return InMemoryTimeEntryRepository()
     }
 }
+    fun main(args: Array<String>) {
+        runApplication<PalTrackerApplication>(*args)
+    }
