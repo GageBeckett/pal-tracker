@@ -5,7 +5,7 @@ import org.springframework.boot.runApplication
 import org.springframework.context.annotation.Bean
 
 @SpringBootApplication
-class PalTrackerApplication
+class PalTrackerApplication {
     fun main(args: Array<String>) {
         runApplication<PalTrackerApplication>(*args)
     }
@@ -14,3 +14,4 @@ class PalTrackerApplication
     fun timeEntryRepository(): TimeEntryRepository {
         return InMemoryTimeEntryRepository()
     }
+}
