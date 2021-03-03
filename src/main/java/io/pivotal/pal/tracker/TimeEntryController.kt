@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
 @RestController
+@RequestMapping("/time-entries")
 class TimeEntryController(private val timeEntryRepository: TimeEntryRepository) {
 
     @PostMapping("/create")
