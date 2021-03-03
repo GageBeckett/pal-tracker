@@ -8,26 +8,26 @@ import org.springframework.web.bind.annotation.*
 @RequestMapping("/time-entries")
 class TimeEntryController(private val timeEntryRepository: TimeEntryRepository) {
 
-    @PostMapping("/create")
+    @PostMapping
     @ResponseBody
     fun create(@RequestBody timeEntry: TimeEntry?):ResponseEntity<TimeEntry> =
         timeEntryRepository.create(timeEntry).let {
             ResponseEntity<TimeEntry>(it, HttpStatus.CREATED)
         }
 
-    @GetMapping("/read")
+    @GetMapping
     @ResponseBody
     fun read(@RequestParam("id") id: Long):ResponseEntity<TimeEntry> =
         timeEntryRepository.find(id)?.let {
             ResponseEntity.ok(it)
         } ?: ResponseEntity(HttpStatus.NOT_FOUND)
 
-    @GetMapping("/list")
+    @GetMapping
     fun list():ResponseEntity<MutableList<TimeEntry>> = timeEntryRepository.list().let {
         ResponseEntity.ok(it)
     }
 
-    @PutMapping("/update")
+    @PutMapping
     @ResponseBody
     fun update(@RequestParam("id") id: Long,
                @RequestBody timeEntry: TimeEntry):ResponseEntity<TimeEntry> =
@@ -35,7 +35,7 @@ class TimeEntryController(private val timeEntryRepository: TimeEntryRepository) 
             ResponseEntity.ok(it)
         } ?: ResponseEntity.notFound().build()
 
-    @DeleteMapping("/delete")
+    @DeleteMapping
     fun delete(@RequestParam("id") id: Long): ResponseEntity<Void> =
         ResponseEntity.noContent().build<Void>().also {
             timeEntryRepository.delete(id)
