@@ -5,7 +5,6 @@ import org.springframework.jdbc.core.ResultSetExtractor
 import org.springframework.jdbc.core.RowMapper
 import org.springframework.jdbc.support.GeneratedKeyHolder
 import java.sql.Date
-import java.sql.SQLException
 import java.sql.Statement.RETURN_GENERATED_KEYS
 import java.time.LocalDate
 import javax.sql.DataSource
@@ -45,11 +44,11 @@ class JdbcTimeEntryRepository(dataSource: DataSource) : TimeEntryRepository {
     }
 
 
-    override fun find(id: Long): TimeEntry =
+    override fun find(id: Long) =
         template.query(
             "SELECT id, project_id, user_id, date, hours FROM time_entries WHERE id = ?",
             extractor, id
-        ) ?: TimeEntry(-1L, -1L, -1L, LocalDate.of(1900, 1, 1), -1)
+        )
 
     override fun list(): MutableList<TimeEntry> =
         template.query("SELECT id, project_id, user_id, date, hours FROM time_entries", mapper)
