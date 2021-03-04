@@ -51,13 +51,9 @@ tasks {
 }
 
 flyway {
-    url = developmentDbUrl
+    url = testDbUrl
     user = "tracker"
     password = ""
     locations = arrayOf("filesystem:databases/tracker/migrations")
-
-    tasks.create("testMigrate") {
-        url = testDbUrl
-    }
 }
 
