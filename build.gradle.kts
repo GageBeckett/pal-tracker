@@ -22,6 +22,7 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     implementation("org.springframework.boot:spring-boot-starter-jdbc")
     implementation("mysql:mysql-connector-java")
+    implementation("org.springframework.boot:spring-boot-starter-actuator")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
 
@@ -43,10 +44,20 @@ tasks.test {
 
 val developmentDbUrl = "jdbc:mysql://localhost:3306/tracker_dev?user=tracker&useSSL=false&useTimezone=true&serverTimezone=UTC&useLegacyDatetimeCode=false"
 
+val environmentVariableMap = mapOf(
+    "WELCOME_MESSAGE" to  "howdy",
+    "SPRING_DATASOURCE_URL" to "developmentDbUrl",
+    "MANAGEMENT_ENDPOINTS_WEB_EXPOSURE_INCLUDE" to  "*",
+    "MANAGEMENT_ENDPOINT_HEALTH_SHOWDETAILS" to  "always",
+    "MANAGEMENT_HEALTH_PROBES_ENABLED" to true
+)
 tasks {
     "bootRun"(JavaExec::class) {
-        environment("WELCOME_MESSAGE", "howdy")
-        environment("SPRING_DATASOURCE_URL","developmentDbUrl")
+        environment("WELCOME_MESSAGE",  "howdy")
+        environment("SPRING_DATASOURCE_URL", "developmentDbUrl")
+        environment("MANAGEMENT_ENDPOINTS_WEB_EXPOSURE_INCLUDE",  "*")
+        environment("MANAGEMENT_ENDPOINT_HEALTH_SHOWDETAILS",  "always")
+        environment("MANAGEMENT_HEALTH_PROBES_ENABLED", true)
     }
 }
 
@@ -55,5 +66,9 @@ flyway {
     user = "tracker"
     password = ""
     locations = arrayOf("filesystem:databases/tracker/migrations")
+}
+
+springBoot {
+    buildInfo()
 }
 
