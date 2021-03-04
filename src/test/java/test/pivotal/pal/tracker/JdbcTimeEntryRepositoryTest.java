@@ -79,7 +79,9 @@ public class JdbcTimeEntryRepositoryTest {
 
     @Test
     public void findReturnsNullWhenNotFound() {
-        Assertions.assertThrows(NullPointerException.class, () -> subject.find(999L));
+        TimeEntry actual = subject.find(1);
+        TimeEntry expected = new TimeEntry(-1L, -1L, -1L, LocalDate.of(1900, 1, 1), -1);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test

@@ -7,6 +7,7 @@ import org.springframework.jdbc.support.GeneratedKeyHolder
 import java.sql.Date
 import java.sql.SQLException
 import java.sql.Statement.RETURN_GENERATED_KEYS
+import java.time.LocalDate
 import javax.sql.DataSource
 
 class JdbcTimeEntryRepository(dataSource: DataSource) : TimeEntryRepository {
@@ -25,7 +26,7 @@ class JdbcTimeEntryRepository(dataSource: DataSource) : TimeEntryRepository {
     private val extractor = ResultSetExtractor<TimeEntry> {
         it.takeIf { it.next() }?.let { resultSet ->
             mapper.mapRow(resultSet, 1)
-        } ?: throw SQLException("ResultSet is empty")
+        }
     }
 
     override fun create(timeEntry: TimeEntry) = GeneratedKeyHolder().let { keyHolder ->
@@ -48,7 +49,7 @@ class JdbcTimeEntryRepository(dataSource: DataSource) : TimeEntryRepository {
         template.query(
             "SELECT id, project_id, user_id, date, hours FROM time_entries WHERE id = ?",
             extractor, id
-        ) ?: throw NullPointerException("The TimeEntry Could not be found")
+        ) ?: TimeEntry(-1L, -1L, -1L, LocalDate.of(1900, 1, 1), -1)
 
     override fun list(): MutableList<TimeEntry> =
         template.query("SELECT id, project_id, user_id, date, hours FROM time_entries", mapper)
