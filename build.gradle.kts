@@ -53,7 +53,11 @@ val environmentVariableMap = mapOf(
 )
 tasks {
     "bootRun"(JavaExec::class) {
-        environment(environmentVariableMap)
+        environment("WELCOME_MESSAGE",  "howdy")
+        environment("SPRING_DATASOURCE_URL", "developmentDbUrl")
+        environment("MANAGEMENT_ENDPOINTS_WEB_EXPOSURE_INCLUDE",  "*")
+        environment("MANAGEMENT_ENDPOINT_HEALTH_SHOWDETAILS",  "always")
+        environment("MANAGEMENT_HEALTH_PROBES_ENABLED", true)
     }
 }
 
