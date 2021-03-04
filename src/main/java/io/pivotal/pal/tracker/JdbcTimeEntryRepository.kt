@@ -31,7 +31,7 @@ class JdbcTimeEntryRepository(dataSource: DataSource) : TimeEntryRepository {
     override fun create(timeEntry: TimeEntry) = GeneratedKeyHolder().let { keyHolder ->
         template.update({
             it.prepareStatement(
-                "INSERT  INTO time_entries (project_id, user_id, date, hours) VALUES (?, ?, ?, ?)",
+                "INSERT INTO time_entries (project_id, user_id, date, hours) VALUES (?, ?, ?, ?)",
                 RETURN_GENERATED_KEYS
             ).apply {
                 setLong(1, timeEntry.projectId)
